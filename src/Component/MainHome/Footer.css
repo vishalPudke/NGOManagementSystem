@@ -1,0 +1,35 @@
+/* Apply styles to main headings */
+h3 {
+    color: white;
+  }
+  
+  /* Apply styles to links */
+  a {
+    color: yellow;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  /* Apply hover effect to links */
+  a:hover {
+    color: orange; /* Change this to the desired hover color */
+  }
+  
+  /* Additional styling */
+  .footer1 {
+    /* Add your specific footer styling here */
+  }
+  
+  .container {
+    /* Add your specific container styling here */
+  }
+  
+  .row {
+    /* Add your specific row styling here */
+  }
+  
+  /* Add margin to the policies section */
+  .col-md-2:nth-child(1) {
+    margin-right: 10px; /* Adjust the margin value as needed */
+  }
+  

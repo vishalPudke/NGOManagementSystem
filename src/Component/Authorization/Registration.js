@@ -1,8 +1,10 @@
+import React from "react";
 import { useRef, useState } from "react";
-import { Navbar } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import Styles from "./Style.module.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Styles from "../MainHome/Style.module.css";
 function Registration() {
   let formRef = useRef();
   const [isHovered, setIsHovered] = useState(false);
@@ -14,7 +16,9 @@ function Registration() {
   const [emailError, setEmailError] = useState("");
   const [contactnumberError, setContactnumberError] = useState("");
   const [addressError, setAddressError] = useState("");
+  const [image, setImage] = useState("");
   let navigate = useNavigate();
+  const location = useLocation();
   let [user, setUser] = useState({
     firstname: "",
     lastname: "",
@@ -23,6 +27,18 @@ function Registration() {
     contactNumber: "",
     address: "",
   });
+
+  const showToastMessage = (message) => {
+    if (message === "success") {
+      toast.success("NGO registered sucessfully", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      toast.error("Failed to Register! Try again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
 
   const handleFirstnameChange = (e) => {
     const newUser = { ...user, firstname: e.target.value };
@@ -115,6 +131,7 @@ function Registration() {
       setAddressError("Address is required");
     }
   };
+
   const registerAction = async () => {
     try {
       formRef.current.classList.add("was-validated");
@@ -130,26 +147,42 @@ function Registration() {
       }
 
       const url = "http://localhost:8888/api/v1/auth/register";
+      let formData = new FormData();
+      formData.append("imageProfile", image);
+      formData.append("user", JSON.stringify(user));
+      console.log("image", image);
+      console.log("user", user);
+      axios
+        .post(url, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            console.log(response.data);
+            showToastMessage("success");
+            setUser({
+              firstname: "",
+              lastname: "",
+              email: "",
+              contactNumber: "",
+              password: "",
+              address: "",
+            });
+            setImage(null);
+          } else {
+            showToastMessage("error");
+          }
+        })
+        .catch(() => showToastMessage(""));
 
-      const newUser = { ...user };
-      console.log(newUser);
-
-      axios.post(url, newUser).then(() => {
-        setUser({
-          firstname: "",
-          lastname: "",
-          email: "",
-          contactNumber: "",
-          password: "",
-          address: "",
-        });
-
-        formRef.current.classList.remove("was-validated");
-        alert("USER REGISTERED SUCCESSFULLY");
-        setIsSuccess(true);
-        console.log(newUser);
-        navigate("/", { replace: true });
-      });
+      formRef.current.classList.remove("was-validated");
+      alert("USER REGISTERED SUCCESSFULLY");
+      setIsSuccess(true);
+      console.log(user);
+      navigate("/login", { state: { from: location }, replace: true });
     } catch (err) {
       setIsError(true);
     } finally {
@@ -160,39 +193,30 @@ function Registration() {
     }
   };
 
-  const handleHover = () => {
-    setIsHovered(!isHovered);
-  };
-
   return (
     <>
-      <header>
-        <Navbar bg="dark" data-bs-theme="dark" expand="lg">
-          <Navbar.Brand href="#home">NGO Management System</Navbar.Brand>
-        </Navbar>
-      </header>
       <div>
-      <section
-        className={`container mt-1 ${Styles.welcome_section}`}
-        style={{ backgroundColor: "rgb(149, 233, 136)" }}
-      >
-        <h1>Welcome !!!</h1>
-        <p>NGO Management</p>
-      </section>
-      {/* Registration Form Section */}
-      <div
-        className={`registration_page ${isHovered ? "hovered" : ""}`}
-        style={{
-          background: "linear-gradient(45deg, #00B4DB, #0083B0)",
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+        <div
+          className={`registration_page ${isHovered ? "hovered" : ""}`}
+          style={{
+            backgroundImage: `url("https://d3l793awsc655b.cloudfront.net/blog/wp-content/uploads/2021/08/Types-Of-NGO-Registration-And-Its-Benefits-1.jpg")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            minHeight: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <div className={Styles.registration_form}>
             <h2 className={Styles.registration_title}>Registration Form</h2>
-            <form ref={formRef} className="needs-validation" noValidate>
+
+            <form
+              ref={formRef}
+              className="needs-validation"
+              noValidate
+              encType="multipart/form-data"
+            >
               <div className="mb-3">
                 <label htmlFor="firstName" className="form-label">
                   First Name
@@ -230,6 +254,19 @@ function Registration() {
                 {lastnameError && (
                   <div className="invalid-feedback">{lastnameError}</div>
                 )}
+              </div>
+              <div className="mb-3">
+                <label htmlFor="lastName" className="form-label">
+                  Profile Photo
+                </label>
+                <input
+                  required
+                  type="file"
+                  accept="image/png"
+                  onChange={(e) => {
+                    setImage(e.target.files[0]);
+                  }}
+                />
               </div>
 
               <div className="mb-3">

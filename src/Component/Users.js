@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const Users = () => {
   const handleGetUsers = async () => {
     try {
       const response = await axiosPrivate.get("/api/v1/demo-controller");
-      console.log(response.data);
+      console.log("Secure API Hit : ", response.data);
     } catch (err) {
       console.error(err);
       navigate("/login", { state: { from: location }, replace: true });
