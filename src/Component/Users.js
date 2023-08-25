@@ -1,5 +1,5 @@
 import React from "react";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../Component/hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Users = () => {

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 function NgoRegForm() {
   const axiosPrivate = useAxiosPrivate();

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import logo from "../Navigation/logo.jpg";
 import swal from "sweetalert";
-//import useAxios from "../../hooks/UseAxios";
 
 function Payment() {
   const [amount, setAmount] = useState("");

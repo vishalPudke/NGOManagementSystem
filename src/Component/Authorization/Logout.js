@@ -29,9 +29,9 @@
 // export default Logout;
 
 import React from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 function Logout() {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();

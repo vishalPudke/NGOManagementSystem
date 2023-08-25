@@ -162,14 +162,16 @@
 
 // export default NavBar;
 
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "./logo.jpg";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 
 function NavBar({ userRole }) {
-  const authState = useAuth();
+  const auth = useAuth();
+
+  console.log("NAVBAR :", auth.firstname);
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
@@ -206,6 +208,20 @@ function NavBar({ userRole }) {
             >
               Sign In
             </Nav.Link>
+            <Nav.Link
+              as={Link}
+              to="/contactus"
+              className="fs-4 fw-medium text-warning"
+            >
+              Contact Us
+            </Nav.Link>
+            <Nav.Link
+              as={Link}
+              to="/payment"
+              className="fs-4 fw-medium text-warning"
+            >
+              Donate
+            </Nav.Link>{" "}
             {userRole === "ADMIN" && (
               <>
                 <Nav.Link
@@ -224,21 +240,44 @@ function NavBar({ userRole }) {
                 </Nav.Link>
               </>
             )}
-            <Nav.Link
-              as={Link}
-              to="/contactus"
-              className="fs-4 fw-medium text-warning"
-            >
-              Contact Us
-            </Nav.Link>
             {(userRole === "ADMIN" || userRole === "DONER") && (
-              <Nav.Link
-                as={Link}
-                to="/profile"
-                className="fs-4 fw-medium text-warning"
-              >
-                Profile
-              </Nav.Link>
+              <>
+                <Nav.Link
+                  as={Link}
+                  to="/profile"
+                  className="fs-4 fw-medium text-warning"
+                >
+                  Profile
+                </Nav.Link>
+                {/* <Navbar.Brand
+                  as={Link}
+                  to="profile"
+                  className="fs-2 text-warning d-flex align-items-left"
+                >
+                  <img
+                    src={auth.imageProfile}
+                    alt="Profile"
+                    width="40"
+                    height="40"
+                    className="d-inline-block align-top me-2"
+                  />
+                </Navbar.Brand> */}
+                {/* {auth.isAuthenticated && auth.imageProfile && (
+                  <Navbar.Brand
+                    as={Link}
+                    to="/profile"
+                    className="fs-2 text-warning d-flex align-items-left"
+                  >
+                    <img
+                      src={auth.imageProfile}
+                      alt="Profile"
+                      width="40"
+                      height="40"
+                      className="d-inline-block align-top me-2"
+                    />
+                  </Navbar.Brand> */}
+                {/* )} */}
+              </>
             )}
             {(userRole === "ADMIN" || userRole === "DONER") && (
               <Nav.Link
@@ -249,20 +288,6 @@ function NavBar({ userRole }) {
                 Logout
               </Nav.Link>
             )}
-            <Nav.Link
-              as={Link}
-              to="/payment"
-              className="fs-4 fw-medium text-warning"
-            >
-              Donate
-            </Nav.Link>{" "}
-            <Nav.Link
-              as={Link}
-              to="/donate"
-              className="fs-4 fw-medium text-warning"
-            >
-              Pay
-            </Nav.Link>{" "}
           </Nav>
         </Navbar.Collapse>
       </Container>

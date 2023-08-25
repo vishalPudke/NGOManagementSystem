@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import axios from "../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 import "./Login.css";
 
 const LOGIN_URL = "/api/v1/auth/authenticate";

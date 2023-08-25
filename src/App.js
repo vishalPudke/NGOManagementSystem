@@ -7,16 +7,14 @@ import RequireAuth from "./Component/Authorization/RequireAuth";
 import ContactUs from "./Component/MainHome/ContactUs";
 import Unauthorized from "./Component/UnAuthorizedError/Unauthorized";
 import Users from "./Component/Users";
-import HomePage from "./Component/HomePage";
 import Logout from "./Component/Authorization/Logout";
 import Payment from "./Component/Transaction/Payment";
-import useAuth from "./hooks/useAuth";
+import useAuth from "./Component/hooks/useAuth";
 import Profile from "./Component/Dashboard/Profile";
 
 import Home from "./Component/MainHome/Home";
 import Dashboard from "./Component/Dashboard/Dashboard";
 import NgoRegForm from "./Component/Authorization/NgoRegForm";
-import Donate from "./Component/Transaction/Donate";
 
 const ROLES = {
   Admin: "ADMIN",
@@ -45,7 +43,7 @@ function App() {
 
           <Route path="logout" element={<Logout />} />
           <Route path="user" element={<Users />} />
-          <Route path="donate" element={<Donate />} />
+
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}></Route>
 
           <Route
