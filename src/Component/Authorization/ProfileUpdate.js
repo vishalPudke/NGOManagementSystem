@@ -173,7 +173,7 @@ function ProfileUpdate() {
 
   return (
     <div>
-      {/* <Navbar /> */}
+      
 
       <Container className="mt-5">
         <Row className="justify-content-center">

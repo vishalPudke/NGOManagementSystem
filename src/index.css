@@ -11,3 +11,66 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.img-zoom{
+  border-radius: 1rem;
+}
+.img-zoom:hover{
+  transform: scale(1.1, 1.1);
+}
+
+.navbtn:hover{
+  transform: scale(1.1, 1.1);
+}
+
+.mycard{
+  width: 17vw;
+   margin: 7px ;
+    border-radius: 5%;
+  box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  padding-top: 3px;
+  cursor: pointer;
+}
+.mycard:hover{
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+.flip-box-inner {
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.mycard:hover .flip-box-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-box-front, .flip-box-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-box-front {
+  background-color: #bbb;
+  color: black;
+}
+
+.flip-box-back {
+  background-color: dodgerblue;
+  color: white;
+  transform: rotateY(180deg);
+}
+.signindiv{
+  background: hsla(339, 100%, 55%, 1);
+
+background: linear-gradient(315deg, hsla(339, 100%, 55%, 1) 20%, hsla(197, 100%, 64%, 1) 100%);
+
+background: -moz-linear-gradient(315deg, hsla(339, 100%, 55%, 1) 20%, hsla(197, 100%, 64%, 1) 100%);
+
+background: -webkit-linear-gradient(315deg, hsla(339, 100%, 55%, 1) 20%, hsla(197, 100%, 64%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#ff1b6b", endColorstr="#45caff", GradientType=1 );
+}

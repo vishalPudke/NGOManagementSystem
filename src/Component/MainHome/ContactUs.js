@@ -64,7 +64,6 @@ function ContactUs() {
     }
 
     try {
-      // Simulate form submission success
       alert("Form submitted successfully!");
       navigate("/success");
     } catch (error) {
@@ -108,7 +107,7 @@ function ContactUs() {
               )}
             </div>
 
-            {/* Email field */}
+          
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
@@ -125,7 +124,7 @@ function ContactUs() {
               )}
             </div>
 
-            {/* Mobile Number field */}
+           
             <div className="form-group">
               <label htmlFor="mobileNumber">Mobile Number</label>
               <div className="row">
@@ -160,7 +159,7 @@ function ContactUs() {
               </div>
             </div>
 
-            {/* City field */}
+         
             <div className="form-group">
               <label htmlFor="city">City</label>
               <input

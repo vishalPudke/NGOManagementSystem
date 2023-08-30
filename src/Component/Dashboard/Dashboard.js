@@ -1,8 +1,11 @@
 import React, { createContext } from "react";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { Card, Button } from "react-bootstrap";
 
 import axios from "../api/axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAuth from "../hooks/useAuth";
 
 const DataContext = createContext(null);
 const showToastMessage = (message) => {
@@ -29,44 +32,48 @@ const showToastMessage = (message) => {
 
 function Dashboard() {
   const [ngoslist, setNgoslist] = useState([]);
-  const [testimaglist, setTestimag] = useState([]);
+  const [donationdata, setDonationdata] = useState("");
+  const axiosPrivate = useAxiosPrivate();
+  const auth = useAuth();
   // const [img, setimg] = useState();
   useEffect(() => {
     getAllngos();
-    getAllngosWhole();
-    // getImage();
+    // getdonationdata();
   }, []);
 
   let getAllngos = async () => {
-    let url = "http://localhost:9191/image/fetch-ngos";
+    let url = "http://localhost:9191/image/ngowholelist";
+    // let url = "http://localhost:8888/api/change/ngowholelist";
 
     await axios
       .get(url)
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
 
         setNgoslist(response.data);
       })
       .catch((err) => console.log(err));
   };
 
-  let getAllngosWhole = async () => {
-    let url = `http://localhost:9191/image/ngologoforallids`;
-
-    await axios
-      .get(url)
-      .then((response) => {
-        console.log(response.data[0]);
-        const list = [...response.data];
-        setTestimag(list);
-      })
-      .catch((err) => console.log(err));
-  };
-  console.log(testimaglist);
-  // let getImage = async () => {
-  //   let url = `http://localhost:8888/image/ngologoforallids`;
-  //   const res = await axiosPrivate.fetch(url);
-  //   console.log(res);
+  // let getdonationdata = async () => {
+  //   let url = "/api/v1/auth/payment/donation";
+  //   const response = await axios
+  //     .post(url, {
+  //       headers: { "Content-Type": "application/json" },
+  //       Authorization: `Bearer${auth?.access_token}`,
+  //       withCredentials: true,
+  //     })
+  //     .catch((err) => console.log(err));
+  //   console.log(response);
+  // await axiosPrivate
+  //   .post(url, {
+  //     headers: { "Content-Type": "application/json" },
+  //     // withCredentials: true,
+  //   })
+  //   .then((response) => {
+  //     console.log(response);
+  //   })
+  //   .catch((err) => console.log(err));
   // };
 
   async function approve(id) {
@@ -88,6 +95,7 @@ function Dashboard() {
     let status = 0;
     if (window.confirm("Do you want to REMOVE this NGO?")) {
       let url = `http://localhost:9191/image/delete?id=${id}`;
+
       await axios
         .get(url)
         .then((response) => {
@@ -113,7 +121,7 @@ function Dashboard() {
     },
     {
       status: "REGISTERED",
-      color: "green",
+      color: "lightgreen",
       onclick: deletengo,
       tootip: "Click to Remove",
     },
@@ -144,7 +152,7 @@ function Dashboard() {
               maxWidth: "5vw",
               maxHeight: "auto",
             }}
-            src={"data:image/jpeg;base64," + `${testimaglist[count]}`}
+            src={"data:image/jpeg;base64," + `${item.logo}`}
             alt="imag"
           />
         </td>
@@ -180,11 +188,115 @@ function Dashboard() {
     </>
   ));
 
+  let waitingcards = ngoslist
+    .filter((item) => item.status === "WAITING")
+    .map((item) => (
+      <>
+        <Card
+          className="justify-content-center mx-3"
+          style={{ width: "18rem", border: `solid 2px ${decision[0].color}` }}
+        >
+          <Card.Img
+            variant="top"
+            src={"data:image/jpeg;base64," + `${item.logo}`}
+          />
+          <Card.Body>
+            <Card.Title>
+              {item.name} ({item.nitiregno})
+            </Card.Title>
+            <Card.Text>
+              {item.fow}
+              <br />
+              Registartion date: {item.regDate}
+              <br />
+              <span>Contact me</span>
+              <span
+                onClick={() => window.location.assign(email)}
+                style={{ cursor: "pointer" }}
+              >
+                📩
+              </span>
+            </Card.Text>
+            <Button
+              variant="btn btn-warning"
+              onClick={() => {
+                item.status == "WAITING"
+                  ? (i = 0)
+                  : item.status == "APPROVED"
+                  ? (i = 1)
+                  : (i = 2);
+                decision[i].onclick(item.id);
+              }}
+              style={{ color: decision[0].color, backgroundColor: "black" }}
+            >
+              <b>{item.status}</b>
+            </Button>
+          </Card.Body>
+        </Card>
+      </>
+    ));
+
+  let regapproved = ngoslist
+    .filter((item) => item.status !== "WAITING")
+    .map((item) => (
+      <>
+        <span style={{ display: "none" }}>
+          {item.status == "WAITING"
+            ? (i = 0)
+            : item.status == "APPROVED"
+            ? (i = 1)
+            : (i = 2)}
+          {(email += item.email)}
+        </span>
+        <Card
+          className="justify-content-center mx-3"
+          style={{ width: "18rem", border: `solid 2px ${decision[i].color}` }}
+        >
+          <Card.Img
+            variant="top"
+            src={"data:image/jpeg;base64," + `${item.logo}`}
+          />
+          <Card.Body>
+            <Card.Title>
+              {item.name} ({item.nitiregno})
+            </Card.Title>
+            <Card.Text>
+              {item.fow}
+              <br />
+              Registartion date: {item.regDate}
+              <br />
+              <span>Contact me</span>
+              <span
+                onClick={() => window.location.assign(email)}
+                style={{ cursor: "pointer" }}
+              >
+                📩
+              </span>
+            </Card.Text>
+            <Button
+              variant="btn"
+              onClick={() => {
+                item.status == "WAITING"
+                  ? (i = 0)
+                  : item.status == "APPROVED"
+                  ? (i = 1)
+                  : (i = 2);
+                decision[i].onclick(item.id);
+              }}
+              style={{ color: decision[i].color, backgroundColor: "black" }}
+            >
+              <b>{item.status}</b>
+            </Button>
+          </Card.Body>
+        </Card>
+      </>
+    ));
+
   if (tblcontent.length > 0) {
     return (
       <div>
         Admin Dashboard
-        <table className="table table-striped table-hover">
+        {/* <table className="table table-striped table-hover">
           <thead>
             <tr className="">
               <th scope="col" className="table-dark">
@@ -214,11 +326,24 @@ function Dashboard() {
             </tr>
           </thead>
           <tbody>{tblcontent}</tbody>
-        </table>
-        {/* <div>
-          Image here
-          <img src={"data:image/jpeg;base64," + `${img}`} alt="imag" />
-        </div> */}
+        </table> */}
+        <div
+          className="container-fluid row justify-content-center p-3"
+          style={{ backgroundColor: "#FFF0F5" }}
+        >
+          <p className="container-fluid row justify-content-center">
+            List of Ngos (Registered / Approved)
+          </p>
+          {regapproved}
+        </div>
+        <hr />
+        <div
+          className="container-fluid row justify-content-center p-3"
+          style={{ backgroundColor: "#DAFFFB" }}
+        >
+          <p>List of Ngos (Waiting)</p>
+          {waitingcards}
+        </div>
         <ToastContainer />
       </div>
     );

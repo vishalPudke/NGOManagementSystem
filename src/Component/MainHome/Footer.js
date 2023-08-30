@@ -156,13 +156,14 @@ function Footer() {
                 neither controls their content nor undertakes any responsibility
                 regarding them.
               </p>
+              <p>© 2023 Helping-hands. All Rights Reserved</p>
             </div>
           </div>
         </div>
       </div>
       <br />
 
-      <div className="footer1 full-width" style={footerStyle}>
+      {/* <div className="footer1 full-width" style={footerStyle}>
         <div className="container">
           <section className="mb-2 mt-2">
             <div className="container">
@@ -209,7 +210,7 @@ function Footer() {
             </div>
           </section>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

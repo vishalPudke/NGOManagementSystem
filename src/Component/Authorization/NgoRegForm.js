@@ -6,6 +6,7 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import swal from "sweetalert";
 
 function NgoRegForm() {
   const axiosPrivate = useAxiosPrivate();
@@ -136,8 +137,8 @@ function NgoRegForm() {
       return;
     }
 
-    // let url = "http://localhost:8888/image/ngologo";
     let url = "http://localhost:8888/api/v1/auth/register/ngologo";
+    // let url = "http://localhost:9191/image/ngologo";
     let formData = new FormData();
     formData.append("logo", logo);
     formData.append("ngo", JSON.stringify(ngo));
@@ -151,9 +152,15 @@ function NgoRegForm() {
       })
       .then((response) => {
         console.log(response);
-        if (response.status === 200) {
+        if (response.data.role !== "NGO") {
+          swal(
+            "Email/ Niti Aayog registration no",
+            "already registered!",
+            "Error ❌"
+          );
+        } else if (response.status === 200 && response.data.role === "NGO") {
           console.log(response.data);
-          showToastMessage("success");
+          swal("Registered!", "Success");
           setNgo({
             name: "",
             fow: "",
@@ -163,13 +170,14 @@ function NgoRegForm() {
             password: "",
           });
           setLogo("");
+          navigate("/login", { replace: true });
         } else {
           showToastMessage("error");
         }
       })
       .catch(() => showToastMessage(""));
   }
-
+  //
   return (
     <div>
       {/* <Navbar /> */}

@@ -5,6 +5,8 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Styles from "../MainHome/Style.module.css";
+import swal from "sweetalert";
+
 function Registration() {
   let formRef = useRef();
   const [isHovered, setIsHovered] = useState(false);
@@ -31,6 +33,10 @@ function Registration() {
   const showToastMessage = (message) => {
     if (message === "success") {
       toast.success("NGO registered sucessfully", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else if (message === "email") {
+      toast.error("Email already registered!!", {
         position: toast.POSITION.TOP_RIGHT,
       });
     } else {
@@ -160,9 +166,8 @@ function Registration() {
         })
         .then((response) => {
           console.log(response);
-          if (response.status === 200) {
-            console.log(response.data);
-            showToastMessage("success");
+          if (response.status === 200 && response.data.role === "DONER") {
+            swal("Registered!", "Success");
             setUser({
               firstname: "",
               lastname: "",
@@ -172,17 +177,20 @@ function Registration() {
               address: "",
             });
             setImage(null);
+            navigate("/login", { state: { from: location }, replace: true });
+          } else if (response.data.role !== "DONER") {
+            console.log("in email error");
+            swal("Email already registered! ❌", "ERROR");
+            // navigate("/registration", { state: { from: location }, replace: true });
           } else {
-            showToastMessage("error");
+            swal("Something wrong happened ❌", "ERROR");
           }
         })
-        .catch(() => showToastMessage(""));
+        .catch(() => showToastMessage("error"));
 
       formRef.current.classList.remove("was-validated");
-      alert("USER REGISTERED SUCCESSFULLY");
       setIsSuccess(true);
       console.log(user);
-      navigate("/login", { state: { from: location }, replace: true });
     } catch (err) {
       setIsError(true);
     } finally {
@@ -197,9 +205,11 @@ function Registration() {
     <>
       <div>
         <div
-          className={`registration_page ${isHovered ? "hovered" : ""}`}
+          className={`signindiv registration_page ${
+            isHovered ? "hovered" : ""
+          }`}
           style={{
-            backgroundImage: `url("https://d3l793awsc655b.cloudfront.net/blog/wp-content/uploads/2021/08/Types-Of-NGO-Registration-And-Its-Benefits-1.jpg")`,
+            // backgroundImage: `url("https://d3l793awsc655b.cloudfront.net/blog/wp-content/uploads/2021/08/Types-Of-NGO-Registration-And-Its-Benefits-1.jpg")`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             minHeight: "100vh",

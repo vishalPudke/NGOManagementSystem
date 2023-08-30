@@ -10,7 +10,7 @@ const Login = () => {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const home = location.state?.from?.pathname || "/";
+  // const home = location.state?.from?.pathname || "/";
   const formRef = useRef();
   const [isHovered, setIsHovered] = useState(false);
 
@@ -83,6 +83,8 @@ const Login = () => {
         firstname,
         lastname,
         imageProfile,
+        contactNumber,
+        address,
       } = response.data;
       setAuth({
         access_token,
@@ -93,6 +95,8 @@ const Login = () => {
         firstname,
         lastname,
         imageProfile,
+        contactNumber,
+        address,
       });
 
       setUser({
@@ -103,8 +107,6 @@ const Login = () => {
       formRef.current.reset();
       formRef.current.classList.remove("was-validated");
 
-      alert("USER LOGIN SUCCESSFULLY");
-
       console.log(JSON.stringify(response?.data));
 
       console.log("Access Token : ", response?.data?.access_token);
@@ -114,7 +116,7 @@ const Login = () => {
       console.log("LastName :", response?.data?.lastname);
       console.log("Refresh Token : ", response?.data?.refresh_token);
 
-      navigate(home);
+      navigate("/", { state: { from: location }, replace: true });
     } catch (err) {
       if (!err.response) {
         setErrMsg("No Server Response");
@@ -130,15 +132,17 @@ const Login = () => {
 
   return (
     <div
+      className="signindiv"
       style={{
-        backgroundImage: `url("https://i.pinimg.com/originals/de/07/d8/de07d87e44a4c4e1179b957d2df985af.jpg")`,
+        // backgroundImage: `url("https://images.pexels.com/photos/7134981/pexels-photo-7134981.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load")`,
         backgroundPosition: "center",
         backgroundSize: "cover",
-        minHeight: "100vh",
-        width: "100vw",
+        minHeight: "88vh",
+        // width: "100vw",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        positionTop: 0,
       }}
     >
       <section className="login-container">
@@ -186,10 +190,11 @@ const Login = () => {
           </div>
         </form>
         <p>
-          Need an Account?
-          <br />
           <span className="line">
-            <Link to="/registration">Sign Up</Link>
+            Need an Account?...
+            <Link to="/registration" style={{ color: "blue" }}>
+              <b>Sign Up</b>
+            </Link>
           </span>
         </p>
       </section>

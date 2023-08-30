@@ -7,18 +7,21 @@ const carouselData = [
     image:
       "https://www.artofliving.org/sites/www.artofliving.org/files/styles/original_image/public/landing_page_uploads/full_carousel/tree%20planting%20hero%20desktop.jpg.webp?itok=5NOzV9qv",
   },
-  { image: "https://www.artofliving.org/sites/www.artofliving.org/files/styles/original_image/public/landing_page_uploads/full_carousel/tree%20planting%20hero%20desktop.jpg.webp?itok=5NOzV9qv" },
   {
     image:
-       "https://www.artofliving.org/sites/www.artofliving.org/files/styles/original_image/public/landing_page_uploads/full_carousel/tree%20planting%20hero%20desktop.jpg.webp?itok=5NOzV9qv",
+      "https://www.artofliving.org/sites/www.artofliving.org/files/styles/original_image/public/landing_page_uploads/full_carousel/tree%20planting%20hero%20desktop.jpg.webp?itok=5NOzV9qv",
   },
   {
     image:
-    "https://www.artofliving.org/sites/www.artofliving.org/files/styles/original_image/public/landing_page_uploads/full_carousel/tree%20planting%20hero%20desktop.jpg.webp?itok=5NOzV9qv",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3WNyuAlKn8lR_Ln0k1ASqsZmn8446y1N4TnAbrxL42qQF3WHA6hw_eJGLYwvSiOsDHsE&usqp=CAU",
   },
   {
     image:
-    "https://www.artofliving.org/sites/www.artofliving.org/files/styles/original_image/public/landing_page_uploads/full_carousel/tree%20planting%20hero%20desktop.jpg.webp?itok=5NOzV9qv",
+      "https://www.artofliving.org/sites/www.artofliving.org/files/styles/original_image/public/landing_page_uploads/full_carousel/tree%20planting%20hero%20desktop.jpg.webp?itok=5NOzV9qv",
+  },
+  {
+    image:
+      "https://www.artofliving.org/sites/www.artofliving.org/files/styles/original_image/public/landing_page_uploads/full_carousel/tree%20planting%20hero%20desktop.jpg.webp?itok=5NOzV9qv",
   },
 ];
 

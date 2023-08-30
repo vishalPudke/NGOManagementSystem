@@ -1,0 +1,47 @@
+.navbar {
+    align-items: center;
+   
+    display: flex;
+    
+    min-width: 100%;
+    position: fixed;
+    z-index: 3;
+    background-color: white;
+    justify-content: center;
+    margin: 20px;
+    top: 0;
+    
+   }
+   .navbar-linkone{
+    display: flex;
+    justify-content: flex-start;
+    width: 30%;
+    font-size: 40px;
+   }
+   
+   .navelements{
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    padding: 15px;
+    font-size: 20px;
+   }
+   .btn-navbar{
+    border-radius: 50px;
+background: #FF734F;
+
+border: none;
+display: flex;
+height: 40px;
+padding: 8px 20px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+color: #FFF;
+font-family: "Montserrat";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 150%; /* 24px */
+cursor: pointer;
+}
